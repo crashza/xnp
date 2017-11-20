@@ -1,0 +1,13 @@
+# Config Variables for GNP scripts
+# Author Trevor Steyn <trevor@webon.co.za>
+
+CFG_FTPS_HOST   = 'ftps.porting.co.za'
+CFG_FTPS_PORT   = '10021'
+CFG_FTPS_USER   = 'someuser'
+CFG_FTPS_PASS   = 'somepass'
+CFG_FTPS_DIR    = 'DWNLDS'
+
+CFG_DB_HOST     = '127.0.0.1'
+CFG_DB_PORT     = '3306'
+CFG_DB_USER     = 'db_user'
+CFG_DB_PASS     = 'db_pass'
