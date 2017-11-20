@@ -1,0 +1,154 @@
+CREATE DATABASE mnp;
+USE mnp;
+DROP TABLE IF EXISTS `home_prefixes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `home_prefixes` (
+  `i_prefix` int(11) NOT NULL AUTO_INCREMENT,
+  `prefix` varchar(20) NOT NULL,
+  `i_routing_label` int(11) NOT NULL,
+  PRIMARY KEY (`i_prefix`),
+  UNIQUE KEY `prefix` (`prefix`)
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `portings`
+--
+
+DROP TABLE IF EXISTS `portings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `portings` (
+  `i_destination` int(11) NOT NULL AUTO_INCREMENT,
+  `destination` varchar(20) NOT NULL,
+  `i_routing_label` int(11) NOT NULL,
+  `port_id` varchar(100) DEFAULT NULL,
+  `action` varchar(20) DEFAULT NULL,
+  `file` varchar(64) DEFAULT NULL,
+  `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`i_destination`),
+  UNIQUE KEY `destination` (`destination`)
+) ENGINE=InnoDB AUTO_INCREMENT=6233075 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `processed_files`
+--
+
+DROP TABLE IF EXISTS `processed_files`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `processed_files` (
+  `i_file` int(11) NOT NULL AUTO_INCREMENT,
+  `file` varchar(64) NOT NULL,
+  PRIMARY KEY (`i_file`),
+  UNIQUE KEY `file` (`file`)
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `routing_labels`
+--
+
+DROP TABLE IF EXISTS `routing_labels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `routing_labels` (
+  `i_routing_label` int(11) NOT NULL AUTO_INCREMENT,
+  `company_name` varchar(64) NOT NULL,
+  `participant_id` varchar(64) NOT NULL,
+  `routing_label` char(4) NOT NULL,
+  PRIMARY KEY (`i_routing_label`),
+  UNIQUE KEY `participant_id` (`participant_id`),
+  UNIQUE KEY `routing_label` (`routing_label`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+CREATE DATABASE gnp;
+USE gnp;
+
+DROP TABLE IF EXISTS `home_prefixes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `home_prefixes` (
+  `i_prefix` int(11) NOT NULL AUTO_INCREMENT,
+  `prefix` varchar(20) NOT NULL,
+  `i_routing_label` int(11) NOT NULL,
+  PRIMARY KEY (`i_prefix`),
+  UNIQUE KEY `prefix` (`prefix`)
+) ENGINE=InnoDB AUTO_INCREMENT=5459 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `portings`
+--
+
+DROP TABLE IF EXISTS `portings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `portings` (
+  `i_destination` int(11) NOT NULL AUTO_INCREMENT,
+  `destination` varchar(20) NOT NULL,
+  `i_routing_label` int(11) NOT NULL,
+  `port_id` varchar(100) DEFAULT NULL,
+  `action` varchar(20) DEFAULT NULL,
+  `file` varchar(64) DEFAULT NULL,
+  `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`i_destination`),
+  UNIQUE KEY `destination` (`destination`)
+) ENGINE=InnoDB AUTO_INCREMENT=947604 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `processed_files`
+--
+
+DROP TABLE IF EXISTS `processed_files`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `processed_files` (
+  `i_file` int(11) NOT NULL AUTO_INCREMENT,
+  `file` varchar(64) NOT NULL,
+  PRIMARY KEY (`i_file`),
+  UNIQUE KEY `file` (`file`)
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `routing_labels`
+--
+
+DROP TABLE IF EXISTS `routing_labels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `routing_labels` (
+  `i_routing_label` int(11) NOT NULL AUTO_INCREMENT,
+  `company_name` varchar(64) NOT NULL,
+  `participant_id` varchar(64) NOT NULL,
+  `routing_label` char(4) NOT NULL,
+  PRIMARY KEY (`i_routing_label`),
+  UNIQUE KEY `participant_id` (`participant_id`),
+  UNIQUE KEY `routing_label` (`routing_label`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-11-20 21:45:33
