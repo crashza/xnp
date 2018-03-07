@@ -159,7 +159,7 @@ def save_lf_processed(values):
 # Config vars this can overwrite config.py
 
 CFG_ARCHIVE_DIR = '/srv/files/gnp/'
-CFG_DB_NAME		= 'gnp' 
+CFG_DB_NAME	= 'gnp' 
 CFG_TMP_XML 	= '/tmp/gnp.xml'
 CFG_DB_MAX_INS	= 500000
 
