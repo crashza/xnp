@@ -160,6 +160,7 @@ def save_lf_processed(values):
 
 CFG_ARCHIVE_DIR = '/srv/files/gnp/'
 CFG_DB_NAME     = 'gnp' 
+CFG_DB_P1_NAME  = 'porta-billing'
 CFG_TMP_XML     = '/tmp/gnp.xml'
 CFG_DB_MAX_INS  = 500000
 
@@ -189,6 +190,15 @@ try:
     last_file = cursor.fetchone()
 except mysql.connector.Error as err:
     log_it("DB: {}".format(err), 'error')
+
+# Connect to Portaone DB
+
+try:
+    cnxp1 =  mysql.connector.connect(host=CFG_DB_P1_HOST, user=CFG_DB_P1_USER, password=CFG_DB_P1_PASS, database=CFG_DB_P1_NAME)
+    cursorp1 = cnxp1.cursor()
+except mysql.connector.Error as err:
+    log_it("DB: {}".format(err), 'error')
+
 
 # Slurp up all files starting with DCRDBDDownload
 
