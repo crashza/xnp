@@ -117,31 +117,28 @@ def find_best_match(string,prefixes):
 def insert_portings_db(values):
     #print str(len(values))
     try:
-        q = ''' INSERT INTO portings
-                (destination,i_routing_label,port_id,action,file)
+        q = ''' INSERT INTO Number_Portability
+                (destination,origin)
                 VALUES(%s,%s,%s,%s,%s) 
                 ON DUPLICATE KEY UPDATE 
-                i_routing_label=VALUES(i_routing_label),
-                port_id=VALUES(port_id),
-                action=VALUES(action),
-                file=VALUES(file)
+                origin=VALUES(origin)
             '''
-        cursor.executemany(q,values)
+        cursorp1.executemany(q,values)
     except mysql.connector.Error as err:
-        log_it('Mysql Error while inserting into portings: ' + str(err), 'error')
+        log_it('Mysql Error while inserting into Number_Portability: ' + str(err), 'error')
 
 # Delete portings to DB porting
 
 def delete_portings_db(values):
     for destination in values:
         try:
-            q = 'DELETE FROM portings WHERE destination = \'' + destination + '\''
-            cursor.execute(q)
+            q = 'DELETE FROM Number_Portability WHERE destination = \'' + destination + '\''
+            cursorp1.execute(q)
         except mysql.connector.Error as err:
-            log_it('Mysql Error when deleting from portings: ' + str(err), 'error')
+            log_it('Mysql Error when deleting from Number_Portability: ' + str(err), 'error')
 
-        if cursor.rowcount  == 0:
-            log_it('destination:' + destination + ' not found in portings while trying to delete possible stale DB','warning')
+        if cursorp1.rowcount  == 0:
+            log_it('destination:' + destination + ' not found in Number_Portability while trying to delete possible stale DB','warning')
 
 def save_lf_processed(values):
     for p_file in values:
@@ -159,6 +156,7 @@ def save_lf_processed(values):
 
 CFG_ARCHIVE_DIR = '/srv/files/mnp/'
 CFG_DB_NAME     = 'mnp' 
+CFG_DB_P1_NAME  = 'porta-billing' 
 CFG_TMP_XML     = '/tmp/mnp.xml'
 CFG_DB_MAX_INS  = 500000
 
@@ -188,6 +186,15 @@ try:
     last_file = cursor.fetchone()
 except mysql.connector.Error as err:
     log_it("DB: {}".format(err), 'error')
+
+# Connect to Portaone DB
+
+try:
+    cnxp1 =  mysql.connector.connect(host=CFG_DB_P1_HOST, user=CFG_DB_P1_USER, password=CFG_DB_P1_PASS, database=CFG_DB_P1_NAME)
+    cursorp1 = cnxp1.cursor()
+except mysql.connector.Error as err:
+    log_it("DB: {}".format(err), 'error')
+
 
 # Slurp up all files starting with DCRDBDDownload
 
@@ -272,7 +279,7 @@ for number in ported_numbers.keys():
         #print number + ' ' + best_match['ro_label']
     else:
         port_count = port_count + 1
-        insert_db.append((number,routing_labels[ported_numbers[number]['ro_label']],ported_numbers[number]['id_number'],ported_numbers[number]['action'],ported_numbers[number]['file']))
+        insert_db.append((number,ported_numbers[number]['ro_label']]))
         # Free up memory
         del ported_numbers[number]
 
@@ -305,5 +312,7 @@ save_lf_processed(process_files)
 
 cnx.commit()
 cnx.close()
+cnxp1.commit()
+cnxp1.close()
 
 log_it('MNP process completed Portings:' + str(port_count) + ' PortBack:' + str(unport_count) + ' Total:' + str(port_count + unport_count), 'info') 
