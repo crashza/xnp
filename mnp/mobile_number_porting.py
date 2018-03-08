@@ -119,7 +119,7 @@ def insert_portings_db(values):
     try:
         q = ''' INSERT INTO Number_Portability
                 (destination,origin)
-                VALUES(%s,%s,%s,%s,%s) 
+                VALUES(%s,%s) 
                 ON DUPLICATE KEY UPDATE 
                 origin=VALUES(origin)
             '''
