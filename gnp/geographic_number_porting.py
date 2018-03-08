@@ -320,5 +320,8 @@ save_lf_processed(process_files)
 
 cnx.commit()
 cnx.close()
+cnxp1.commit()
+cnxp1.close()
+
 
 log_it('GNP process completed Portings:' + str(port_count) + ' PortBack:' + str(unport_count) + ' Total:' + str(port_count + unport_count), 'info') 
