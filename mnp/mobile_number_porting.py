@@ -158,7 +158,7 @@ CFG_ARCHIVE_DIR = '/srv/files/mnp/'
 CFG_DB_NAME     = 'mnp' 
 CFG_DB_P1_NAME  = 'porta-billing' 
 CFG_TMP_XML     = '/tmp/mnp.xml'
-CFG_DB_MAX_INS  = 500000
+CFG_DB_MAX_INS  = 10000
 
 # parse CLI arguments
 
