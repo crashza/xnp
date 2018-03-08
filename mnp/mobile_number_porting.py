@@ -279,7 +279,7 @@ for number in ported_numbers.keys():
         #print number + ' ' + best_match['ro_label']
     else:
         port_count = port_count + 1
-        insert_db.append((number,ported_numbers[number]['ro_label']]))
+        insert_db.append((number,ported_numbers[number]['ro_label']))
         # Free up memory
         del ported_numbers[number]
 
