@@ -288,7 +288,7 @@ for number in ported_numbers.keys():
     else:
         port_count = port_count + 1
         #insert_db.append((number,routing_labels[ported_numbers[number]['ro_label']]))
-        insert_db.append((number,ported_numbers[number]))
+        insert_db.append((number,ported_numbers[number]['ro_label']))
         # Free up memory
         del ported_numbers[number]
 
