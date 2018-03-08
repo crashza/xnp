@@ -159,7 +159,7 @@ CFG_ARCHIVE_DIR = '/srv/files/gnp/'
 CFG_DB_NAME     = 'gnp' 
 CFG_DB_P1_NAME  = 'porta-billing'
 CFG_TMP_XML     = '/tmp/gnp.xml'
-CFG_DB_MAX_INS  = 500000
+CFG_DB_MAX_INS  = 10000
 
 # parse CLI arguments
 
