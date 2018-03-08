@@ -11,3 +11,8 @@ CFG_DB_HOST     = '127.0.0.1'
 CFG_DB_PORT     = '3306'
 CFG_DB_USER     = 'db_user'
 CFG_DB_PASS     = 'db_pass'
+
+CFG_DB_P1_HOST  = '127.0.0.1'
+CFG_DB_P1_PORT  = '3306'
+CFG_DB_P1_USER  = 'write_user'
+CFG_DB_P1_PASS  = 'password'
