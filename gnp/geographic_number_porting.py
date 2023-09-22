@@ -227,7 +227,7 @@ ported_numbers = {}
 for f in process_files:
     log_it('processing file ' + f, 'info')
     text_file = open(CFG_TMP_XML, "w")
-    myxml = gzip.open(CFG_ARCHIVE_DIR + '/' + f) 
+    myxml = gzip.open(CFG_ARCHIVE_DIR + '/' + f, 'rt') 
     text_file.write(myxml.read())
     text_file.close()
     myxml = ''
