@@ -100,7 +100,6 @@ def find_best_match(string,prefixes):
     lookup = string
     while len(lookup) > 0:
         if lookup in prefixes.keys():
-            print("%s %s %s" %(string,lookup,prefixes[lookup])) 
             best_match ={'prefix':lookup,'ro_label':prefixes[lookup]}
             return best_match
         lookup = lookup[:-1]
@@ -109,7 +108,6 @@ def find_best_match(string,prefixes):
 # Insert portings to DB porting
 
 def insert_portings_db(values):
-    #print str(len(values))
     try:
         q = ''' INSERT INTO portings
                 (destination,i_routing_label,port_id,action,file)
@@ -262,8 +260,6 @@ port_count = 0
 unport_count = 0
 
 for number in ported_numbers.keys():
-    #print 'looking up ' + str(number) + ' for best match'
-    #print port_count
     best_match = find_best_match(number,home_prefixes)
     if ported_numbers[number]['ro_label'] == best_match['ro_label']:
         delete_db.append(number)
@@ -271,7 +267,6 @@ for number in ported_numbers.keys():
         # Free up memory
         #TODO Free up memory
         #del ported_numbers[number]
-        #print number + ' ' + best_match['ro_label']
     else:
         port_count = port_count + 1
         insert_db.append((number,routing_labels[ported_numbers[number]['ro_label']],ported_numbers[number]['id_number'],ported_numbers[number]['action'],ported_numbers[number]['file']))
