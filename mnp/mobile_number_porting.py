@@ -46,7 +46,7 @@ def download_npc():
                 log_it('downloading file ' + f , 'info')
             else:
                 log_it('skipping ' + f + ' as it already exists in ' + CFG_ARCHIVE_DIR, 'debug')
-    except ftplib.all_errors, e:
+    except ftplib.all_errors as e:
         log_it('unable to connect to ' + CFG_FTPS_HOST + ' %s' %e, 'error')
 
 # Loggin definition
@@ -54,7 +54,7 @@ def download_npc():
 def log_it(msg,level):
     # To log to only std out use level debug
     if args.debug:
-        print level + ' ' + msg
+        print (level + ' ' + msg)
     if level == 'info':
         logging.info(msg)
     elif level == 'warning':
@@ -226,7 +226,7 @@ ported_numbers = {}
 for f in process_files:
     log_it('processing file ' + f, 'info')
     text_file = open(CFG_TMP_XML, "w")
-    myxml = gzip.open(CFG_ARCHIVE_DIR + '/' + f) 
+    myxml = gzip.open(CFG_ARCHIVE_DIR + '/' + f, 'rt') 
     text_file.write(myxml.read())
     text_file.close()
     myxml = ''

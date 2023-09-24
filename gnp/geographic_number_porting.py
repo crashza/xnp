@@ -97,21 +97,14 @@ def get_home_prefixes():
 # Finding best prefix match
 
 def find_best_match(string,prefixes):
-    prefix_match = ''
-    routing_label = ''
-    match_length = 0
-    for prefix, value in prefixes.iteritems():
-        #print 'Looking up ' + string + ' against ' + prefix 
-        if string.startswith(prefix):
-            #print 'Match found'
-            if len(prefix) > match_length:
-                prefix_match = prefix
-                routing_label = value
-                match_length = len(prefix)
-    if not prefix_match:
-        log_it('no home network found for ' + string + ' please update databse','error')
-    best_match ={'prefix':prefix_match,'ro_label':routing_label}
-    return best_match
+    lookup = string
+    while len(lookup) > 0:
+        if lookup in prefixes.keys():
+            print("%s %s %s" %(string,lookup,prefixes[lookup])) 
+            best_match ={'prefix':lookup,'ro_label':prefixes[lookup]}
+            return best_match
+        lookup = lookup[:-1]
+    log_it('no home network found for ' + string + ' please update databse','error')
 
 # Insert portings to DB porting
 
@@ -276,13 +269,15 @@ for number in ported_numbers.keys():
         delete_db.append(number)
         unport_count = unport_count + 1
         # Free up memory
-        del ported_numbers[number]
+        #TODO Free up memory
+        #del ported_numbers[number]
         #print number + ' ' + best_match['ro_label']
     else:
         port_count = port_count + 1
         insert_db.append((number,routing_labels[ported_numbers[number]['ro_label']],ported_numbers[number]['id_number'],ported_numbers[number]['action'],ported_numbers[number]['file']))
         # Free up memory
-        del ported_numbers[number]
+        #TODO Free up memory
+        #del ported_numbers[number]
 
 # Fix for huge table like full tables
 
