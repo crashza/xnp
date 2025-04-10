@@ -12,6 +12,7 @@
 
 import re
 import os
+import ssl
 import time
 import json
 import gzip
@@ -34,6 +35,7 @@ def download_npc():
     os_files    = []
     try:
         ftps         = FTP_TLS()
+        ftps.ssl_version = ssl.PROTOCOL_SSLv23;
         ftps.connect(CFG_FTPS_HOST,CFG_FTPS_PORT)
         log_it('connected to ' + CFG_FTPS_HOST + ' welcome message: ' + str(ftps.getwelcome()), 'info')  
         ftps.login(CFG_FTPS_USER,CFG_FTPS_PASS)
@@ -124,7 +126,8 @@ def insert_portings_db(values):
                 ON DUPLICATE KEY UPDATE 
                 routing_number=VALUES(routing_number)
             '''
-        cursorp1.executemany(q,values, CFG_DB_P1_AUTH_DOMAIN)
+        values.append(CFG_DB_P1_AUTH_DOMAIN)
+        cursorp1.executemany(q,values)
     except mysql.connector.Error as err:
         log_it('Mysql Error while inserting into Number_Portability: ' + str(err), 'error')
 
