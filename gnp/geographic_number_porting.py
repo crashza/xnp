@@ -47,7 +47,7 @@ def download_npc():
                 log_it('downloading file ' + f , 'info')
             else:
                 log_it('skipping ' + f + ' as it already exists in ' + CFG_ARCHIVE_DIR, 'debug')
-    except ftplib.all_errors, e:
+    except ftplib.all_errors as e:
         log_it('unable to connect to ' + CFG_FTPS_HOST + ' %s' %e, 'error')
 
 # Loggin definition
@@ -55,7 +55,7 @@ def download_npc():
 def log_it(msg,level):
     # To log to only std out use level debug
     if args.debug:
-        print level + ' ' + msg
+        print (level + ' ' + msg)
     if level == 'info':
         logging.info(msg)
     elif level == 'warning':
@@ -118,13 +118,13 @@ def find_best_match(string,prefixes):
 def insert_portings_db(values):
     #print str(len(values))
     try:
-        q = ''' INSERT INTO Number_Portability
-                (destination,origin)
-                VALUES(%s,%s) 
+        q = ''' INSERT INTO Number_Portability_Local
+                (destination,routing_number,authority_domain,port_status)
+                VALUES(%s,%s,%s,1) 
                 ON DUPLICATE KEY UPDATE 
-                origin=VALUES(origin)
+                routing_number=VALUES(routing_number)
             '''
-        cursorp1.executemany(q,values)
+        cursorp1.executemany(q,values, CFG_DB_P1_AUTH_DOMAIN)
     except mysql.connector.Error as err:
         log_it('Mysql Error while inserting into Number_Portability: ' + str(err), 'error')
 
