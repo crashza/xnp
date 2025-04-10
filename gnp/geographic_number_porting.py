@@ -128,20 +128,20 @@ def insert_portings_db(values):
             '''
         cursorp1.executemany(q,values)
     except mysql.connector.Error as err:
-        log_it('Mysql Error while inserting into Number_Portability: ' + str(err), 'error')
+        log_it('Mysql Error while inserting into Number_Portability_Local: ' + str(err), 'error')
 
 # Delete portings to DB porting
 
 def delete_portings_db(values):
     for destination in values:
         try:
-            q = 'DELETE FROM Number_Portability WHERE destination = \'' + destination + '\''
+            q = 'DELETE FROM Number_Portability_Local WHERE destination = \'' + destination + '\''
             cursorp1.execute(q)
         except mysql.connector.Error as err:
-            log_it('Mysql Error when deleting from Number_Portability: ' + str(err), 'error')
+            log_it('Mysql Error when deleting from Number_Portability_Local: ' + str(err), 'error')
 
         if cursorp1.rowcount  == 0:
-            log_it('destination:' + destination + ' not found in portings while trying to delete possible stale DB','warning')
+            log_it('destination:' + destination + ' not found in Number_Portability_Local while trying to delete possible stale DB','warning')
 
 def save_lf_processed(values):
     for p_file in values:
@@ -289,7 +289,7 @@ for number in ported_numbers.keys():
         #print number + ' ' + best_match['ro_label']
     else:
         port_count = port_count + 1
-        insert_db.append((number,ported_numbers[number]['ro_label']), CFG_DB_P1_AUTH_DOMAIN)
+        insert_db.append((number,ported_numbers[number]['ro_label'], CFG_DB_P1_AUTH_DOMAIN))
         # Free up memory
         del ported_numbers[number]
 

@@ -12,6 +12,7 @@
 
 import re
 import os
+import ssl
 import time
 import json
 import gzip
@@ -33,6 +34,7 @@ def download_npc():
     os_files    = []
     try:
         ftps = FTP_TLS()
+        ftps.ssl_version = ssl.PROTOCOL_SSLv23;
         ftps.connect(CFG_FTPS_HOST,CFG_FTPS_PORT)
         log_it('connected to ' + CFG_FTPS_HOST + ' welcome message: ' + str(ftps.getwelcome()), 'info')  
         ftps.login(CFG_FTPS_USER,CFG_FTPS_PASS)
@@ -46,7 +48,7 @@ def download_npc():
                 log_it('downloading file ' + f , 'info')
             else:
                 log_it('skipping ' + f + ' as it already exists in ' + CFG_ARCHIVE_DIR, 'debug')
-    except ftplib.all_errors, e:
+    except ftplib.all_errors as e:
         log_it('unable to connect to ' + CFG_FTPS_HOST + ' %s' %e, 'error')
 
 # Loggin definition
@@ -54,7 +56,7 @@ def download_npc():
 def log_it(msg,level):
     # To log to only std out use level debug
     if args.debug:
-        print level + ' ' + msg
+        print (level + ' ' + msg)
     if level == 'info':
         logging.info(msg)
     elif level == 'warning':
@@ -117,28 +119,28 @@ def find_best_match(string,prefixes):
 def insert_portings_db(values):
     #print str(len(values))
     try:
-        q = ''' INSERT INTO Number_Portability
-                (destination,origin)
+        q = ''' INSERT INTO Number_Portability_Local
+                (destination,routing_number,authority_domain,port_status
                 VALUES(%s,%s) 
                 ON DUPLICATE KEY UPDATE 
-                origin=VALUES(origin)
+                routing_number=VALUES(routing_number)
             '''
         cursorp1.executemany(q,values)
     except mysql.connector.Error as err:
-        log_it('Mysql Error while inserting into Number_Portability: ' + str(err), 'error')
+        log_it('Mysql Error while inserting into Number_Portability_Local: ' + str(err), 'error')
 
 # Delete portings to DB porting
 
 def delete_portings_db(values):
     for destination in values:
         try:
-            q = 'DELETE FROM Number_Portability WHERE destination = \'' + destination + '\''
+            q = 'DELETE FROM Number_Portability_Local WHERE destination = \'' + destination + '\''
             cursorp1.execute(q)
         except mysql.connector.Error as err:
-            log_it('Mysql Error when deleting from Number_Portability: ' + str(err), 'error')
+            log_it('Mysql Error when deleting from Number_Portability_Local: ' + str(err), 'error')
 
         if cursorp1.rowcount  == 0:
-            log_it('destination:' + destination + ' not found in Number_Portability while trying to delete possible stale DB','warning')
+            log_it('destination:' + destination + ' not found in Number_Portability_Local while trying to delete possible stale DB','warning')
 
 def save_lf_processed(values):
     for p_file in values:
@@ -279,7 +281,7 @@ for number in ported_numbers.keys():
         #print number + ' ' + best_match['ro_label']
     else:
         port_count = port_count + 1
-        insert_db.append((number,ported_numbers[number]['ro_label']))
+        insert_db.append((number,ported_numbers[number]['ro_label'], CFG_DB_P1_AUTH_DOMAIN))
         # Free up memory
         del ported_numbers[number]
 
