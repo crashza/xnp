@@ -99,21 +99,13 @@ def get_home_prefixes():
 # Finding best prefix match
 
 def find_best_match(string,prefixes):
-    prefix_match = ''
-    routing_label = ''
-    match_length = 0
-    for prefix, value in prefixes.iteritems():
-        #print 'Looking up ' + string + ' against ' + prefix 
-        if string.startswith(prefix):
-            #print 'Match found'
-            if len(prefix) > match_length:
-                prefix_match = prefix
-                routing_label = value
-                match_length = len(prefix)
-    if not prefix_match:
-        log_it('no home network found for ' + string + ' please update databse','error')
-    best_match ={'prefix':prefix_match,'ro_label':routing_label}
-    return best_match
+    lookup = string
+    while len(lookup) > 0:
+        if lookup in prefixes.keys():
+            best_match ={'prefix':lookup,'ro_label':prefixes[lookup]}
+            return best_match
+        lookup = lookup[:-1]
+    log_it('no home network found for ' + string + ' please update databse','error')
 
 # Insert portings to DB porting
 
