@@ -126,7 +126,6 @@ def insert_portings_db(values):
                 ON DUPLICATE KEY UPDATE 
                 routing_number=VALUES(routing_number)
             '''
-        values.append(CFG_DB_P1_AUTH_DOMAIN)
         cursorp1.executemany(q,values)
     except mysql.connector.Error as err:
         log_it('Mysql Error while inserting into Number_Portability: ' + str(err), 'error')
@@ -290,7 +289,7 @@ for number in ported_numbers.keys():
         #print number + ' ' + best_match['ro_label']
     else:
         port_count = port_count + 1
-        insert_db.append((number,ported_numbers[number]['ro_label']))
+        insert_db.append((number,ported_numbers[number]['ro_label']), CFG_DB_P1_AUTH_DOMAIN)
         # Free up memory
         del ported_numbers[number]
 
