@@ -112,8 +112,8 @@ def insert_portings_db(values):
     #print str(len(values))
     try:
         q = ''' INSERT INTO Number_Portability_Local
-                (destination,routing_number,authority_domain,port_status)
-                VALUES(%s,%s, %s, 1) 
+                (destination,routing_number,authority_domain,port_status,effective_from)
+                VALUES(%s,%s, %s, 1,'1970-01-01 00:00:00') 
                 ON DUPLICATE KEY UPDATE 
                 routing_number=VALUES(routing_number)
             '''
