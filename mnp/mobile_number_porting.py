@@ -126,7 +126,7 @@ def insert_portings_db(values):
 def delete_portings_db(values):
     for destination in values:
         try:
-            q = 'DELETE FROM Number_Portability_Local WHERE destination = \'' + destination + '\''
+            q = 'DELETE FROM Number_Portability_Local WHERE destination = \'' + destination + '\' AND authority_domain = \'' + CFG_DB_P1_AUTH_DOMAIN + '\''
             cursorp1.execute(q)
         except mysql.connector.Error as err:
             log_it('Mysql Error when deleting from Number_Portability_Local: ' + str(err), 'error')
